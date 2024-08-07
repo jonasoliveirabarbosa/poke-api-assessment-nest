@@ -30,6 +30,7 @@ $ npm run test
 $ npm run test:cov
 ```
 
-Acknowledgements
-[PokeApi](https://pokeapi.co/) for providing the Pokémon data.
-[Nest](https://github.com/nestjs/nest) for the web framework.
+## Acknowledgements
+
+- [PokeApi](https://pokeapi.co/) for providing the Pokémon data.
+- [Nest](https://github.com/nestjs/nest) for the web framework.

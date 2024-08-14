@@ -1,12 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PokedexController } from './pokedex.controller';
 import { PokedexService } from './pokedex.service';
-import {
-  NamedAPIResource,
-  GetAllQuery,
-  GetOneParams,
-  PokemonDTO,
-} from './dto/dto';
+import { GetAllQuery, GetOneParams, PokemonDTO } from './dto/dto';
 
 describe('PokedexController', () => {
   let pokedexController: PokedexController;
@@ -33,9 +28,19 @@ describe('PokedexController', () => {
   describe('findAll', () => {
     it('should return an array of NamedAPIResource', async () => {
       const query: GetAllQuery = { limit: 10, offset: 0 };
-      const expectedResponse: NamedAPIResource[] = [
-        { name: 'pokemon1', url: 'mockurl/1' },
-        { name: 'pokemon2', url: 'mockurl/2' },
+      const expectedResponse: PokemonDTO[] = [
+        {
+          name: 'pikachu',
+          height: '4',
+          weight: '60',
+          types: ['electric'],
+        } as unknown as PokemonDTO,
+        {
+          name: 'raichu',
+          height: '4',
+          weight: '60',
+          types: ['electric'],
+        } as unknown as PokemonDTO,
       ];
 
       jest.spyOn(pokedexService, 'findAll').mockResolvedValue(expectedResponse);

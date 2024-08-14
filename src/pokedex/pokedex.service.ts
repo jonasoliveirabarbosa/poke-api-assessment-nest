@@ -9,6 +9,12 @@ import { ConfigService } from '@nestjs/config';
 export class PokedexService {
   private readonly logger = new Logger(PokedexService.name);
   private POKEAPI_BASE_URL = this.configService.get<string>('POKEAPI_BASE_URL');
+  private storedPokemons: {
+    [key: string]: {
+      pokemon: PokemonDTO;
+      storedAt: Date;
+    };
+  } = {};
 
   constructor(
     private readonly httpService: HttpService,
@@ -39,6 +45,10 @@ export class PokedexService {
   }
 
   async findOne(name: string): Promise<PokemonDTO> {
+    if (this.storedPokemons[name]) {
+      return this.storedPokemons[name].pokemon;
+    }
+
     const { data } = await firstValueFrom(
       this.httpService
         .get<PokemonDTO>(`${this.POKEAPI_BASE_URL}/pokemon/${name}`)
@@ -49,6 +59,10 @@ export class PokedexService {
           }),
         ),
     );
+
+    this.storedPokemons[name].pokemon = data;
+    this.storedPokemons[name].storedAt = new Date();
+
     return data;
   }
 }
